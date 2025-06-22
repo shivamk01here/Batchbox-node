@@ -1,0 +1,169 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Institution {
+  id             Int               @id @default(autoincrement())
+  name           String
+  email          String            @unique
+  password       String
+  phone          String?
+  logo           String?
+  address        String?
+  createdAt      DateTime          @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+
+
+  users          User[]
+  batches        Batch[]
+  classes        ClassSession[]
+  bookings       Booking[]
+  packages       Package[]
+  notifications  NotificationLog[]
+  payments       Payment[]
+  invoices       Invoice[]
+chatMessages     ChatMessage[]
+}
+
+model User {
+  id             Int              @id @default(autoincrement())
+  name           String
+  email          String           @unique
+  password       String
+  phone          String?
+  roleId         Int
+  institutionId  Int
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  institution    Institution      @relation(fields: [institutionId], references: [id])
+  notifications  NotificationLog[]
+}
+
+model Batch {
+  id             Int              @id @default(autoincrement())
+  name           String
+  description    String?
+  startDate      DateTime
+  endDate        DateTime
+  institutionId  Int
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  institution    Institution      @relation(fields: [institutionId], references: [id])
+  classes        ClassSession[]
+}
+
+model ClassSession {
+  id             Int              @id @default(autoincrement())
+  name           String
+  date           DateTime
+  startTime      String
+  endTime        String
+  batchId        Int
+  institutionId  Int
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  batch          Batch            @relation(fields: [batchId], references: [id])
+  institution    Institution      @relation(fields: [institutionId], references: [id])
+  bookings       Booking[]
+}
+
+model Booking {
+  id             Int              @id @default(autoincrement())
+  name           String
+  email          String
+  phone          String
+  status         String           @default("pending")
+  packageId      Int
+  classId        Int
+  institutionId  Int
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  institution    Institution      @relation(fields: [institutionId], references: [id])
+  package        Package          @relation(fields: [packageId], references: [id])
+  classSession   ClassSession     @relation(fields: [classId], references: [id])
+}
+
+model Package {
+  id             Int              @id @default(autoincrement())
+  name           String
+  price          Float
+  duration       Int
+  isActive       Boolean          @default(true)
+  institutionId  Int
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  institution    Institution      @relation(fields: [institutionId], references: [id])
+  bookings       Booking[]
+}
+
+model Invoice {
+  id             Int              @id @default(autoincrement())
+  studentId      Int
+  institutionId  Int
+  totalAmount    Float
+  dueDate        DateTime
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  institution    Institution      @relation(fields: [institutionId], references: [id])
+  items          InvoiceItem[]
+}
+
+model InvoiceItem {
+  id             Int              @id @default(autoincrement())
+  invoiceId      Int
+  itemType       String
+  itemId         Int
+  label          String
+  amount         Float
+
+  invoice        Invoice          @relation(fields: [invoiceId], references: [id])
+}
+
+model NotificationLog {
+  id             Int              @id @default(autoincrement())
+  userId         Int
+  institutionId  Int
+  message        String
+  type           String
+  status         String           @default("pending")
+  createdAt      DateTime         @default(now())
+
+  institution    Institution      @relation(fields: [institutionId], references: [id])
+  user           User             @relation(fields: [userId], references: [id])
+}
+
+model Payment {
+  id             Int              @id @default(autoincrement())
+  studentId      Int
+  institutionId  Int
+  amount         Float
+  status         String           @default("pending")
+  method         String           // e.g., stripe, cash
+  stripeId       String?          // Stripe session/payment intent ID
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  institution    Institution      @relation(fields: [institutionId], references: [id])
+}
+
+model ChatMessage {
+  id             Int      @id @default(autoincrement())
+  senderId       Int
+  receiverId     Int
+  institutionId  Int
+  message        String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  institution    Institution @relation(fields: [institutionId], references: [id])
+}
