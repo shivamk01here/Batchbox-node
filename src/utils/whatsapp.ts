@@ -5,8 +5,12 @@ const authToken = process.env.TWILIO_AUTH;
 const fromNumber = 'whatsapp:+14155238886'; // Twilio sandbox number
 
 const client = twilio(accountSid, authToken);
+interface WhatsAppData {
+  name: string;
+  phone?: string;
+}
 
-export const sendWhatsApp = async (data) => {
+export const sendWhatsApp = async (data: WhatsAppData) => {
   const message = `🎉 Welcome to BatchBox, ${data.name}!\n\nWe're thrilled to have your organization on board.\n\nLogin and start managing your batches today.`;
 
   return await client.messages.create({

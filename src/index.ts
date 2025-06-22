@@ -5,14 +5,27 @@ import { listenToOrgCreated } from './events/orgCreatedListener';
 const app = express();
 app.use(express.json());
 
-connectRabbit().then(() => {
-  console.log('RabbitMQ connected.');
-});
+const PORT = 3001;
 
-listenToOrgCreated().then(() => {
-    console.log("🔔 Listening for org.created events");
-  });
+const startServer = async () => {
+  try {
+    // 1. Connect to RabbitMQ
+    await connectRabbit();
+    console.log('✅ RabbitMQ connected.');
 
-app.listen(3001, () => console.log("Org service running on 3001"));
+    // 2. Listen to org.created events
+    await listenToOrgCreated();
+    console.log('🔔 Listening for org.created events');
 
-app.listen(3002, () => console.log("Notifications service running on 3002"));
+    // 3. Start the server
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running at http://localhost:${PORT}`);
+    });
+
+  } catch (err) {
+    console.error('❌ Failed to start app:', err);
+    process.exit(1);
+  }
+};
+
+startServer();
