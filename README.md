@@ -57,7 +57,7 @@ Follow these instructions to get the project up and running on your local machin
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/your-username/batchbox-api.git](https://github.com/your-username/batchbox-api.git)
+    git clone [https://github.com/shivamk01here/batchbox-node.git](https://github.com/shivamk01here/batchbox-node.git)
     ```
 2.  **Navigate to the project directory:**
     ```bash
@@ -123,7 +123,7 @@ The API will be available at `http://localhost:5000`.
 
 For detailed information on all available API endpoints, request bodies, and response examples, please refer to our complete API documentation.
 
-**[View Full API Documentation](./api-docs.md)**
+**[View Full API Documentation](./Documentation/api.md)**
 
 ## Running Tests
 
