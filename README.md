@@ -1,11 +1,11 @@
-# BatchBox API
+# Tapclass API
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Node.js](https://img.shields.io/badge/Node.js-20.x-blue)
 ![Express.js](https://img.shields.io/badge/Express.js-4.x-green)
 ![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-blue)
 
-A robust backend service built with Node.js and Express for **BatchBox**, an all-in-one management platform for coaching centers and educational institutions.
+A robust backend service built with Node.js and Express for **Tapclass**, an all-in-one management platform for coaching centers and educational institutions.
 
 ## Table of Contents
 
@@ -57,11 +57,11 @@ Follow these instructions to get the project up and running on your local machin
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/shivamk01here/batchbox-node.git](https://github.com/shivamk01here/batchbox-node.git)
+    git clone [https://github.com/shivamk01here/Tapclass-node.git](https://github.com/shivamk01here/Tapclass-node.git)
     ```
 2.  **Navigate to the project directory:**
     ```bash
-    cd batchbox-api
+    cd Tapclass-api
     ```
 3.  **Install dependencies:**
     ```bash
@@ -85,7 +85,7 @@ The application uses environment variables for configuration.
     PORT=5000
 
     # PostgreSQL Database Connection URL
-    DATABASE_URL="postgresql://user:password@localhost:5432/batchbox_db"
+    DATABASE_URL="postgresql://user:password@localhost:5432/Tapclass_db"
 
     # JWT Secret Key for signing tokens
     JWT_SECRET="your_strong_jwt_secret_key"
