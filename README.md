@@ -1,5 +1,7 @@
 # Tapclass API
 
+![image](https://github.com/user-attachments/assets/dfdf3180-2845-41dc-9f76-6a4a59e0c6c2)
+
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Node.js](https://img.shields.io/badge/Node.js-20.x-blue)
 ![Express.js](https://img.shields.io/badge/Express.js-4.x-green)
